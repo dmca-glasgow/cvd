@@ -6,23 +6,21 @@
     <style>
       html {
         font: 1rem/1.6 sans-serif;
-      }
-      html, body, img {
-        margin: 0;
-        padding: 0;
+        filter: invert(1) hue-rotate(180deg) contrast(0.7);
       }
       body {
-        padding: 0.7rem;
+        margin: 0;
+        padding: 0 0.7rem;
+        height: 100%;
+        background: white;
       }
       img {
         display: block;
         max-width: 100%;
-        height: auto;
-        margin-left: 0.7rem;
+        padding-bottom: 0.7rem;
       }
       svg {
-        height: 0;
-        width: 0;
+        display: none;
       }
       /* #filtered {
         filter: url(#blurred-vision);
@@ -31,6 +29,8 @@
   </head>
   <body>
     <h1>Using CSS + SVG filters to simulate color vision deficiencies</h1>
+
+    <p>Sed posuere consectetur est at lobortis. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
 
     <svg>
       <filter id="blurred-vision">
@@ -144,7 +144,7 @@
 
       wrapper.addEventListener('click', (event) => {
         if (event.target.matches('input')) {
-          filtered.style.filter = getValue(event.target.value);
+          filtered.setAttribute('style', getValue(event.target.value));
         }
       });
 

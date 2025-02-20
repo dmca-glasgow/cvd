@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Color vision deficiency simulation through CSS + SVG filters</title>
+  </head>
+  <body>
+
+    <div id="settings">
+      <label>
+        <span>CVD simulation</span>
+        <select id="cvd">
+          <option value="none">No vision deficiency</option>
+          <option value="achromatopsia">Achromatopsia</option>
+          <option value="deuteranopia">Deuteranopia</option>
+          <option value="protanopia">Protanopia</option>
+          <option value="tritanopia">Tritanopia</option>
+          <option value="blurred-vision">Blurred vision</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Contrast</span>
+        <input
+          id="contrast"
+          type="range"
+          min="0.4"
+          max="1"
+          step="0.01"
+          value="0.8"
+        />
+      </label>
+
+      <label>
+        <span>Dark mode</span>
+        <input id="dark-mode" type="checkbox" />
+      </label>
+
+      <div class="light-mode-options">
+        <label>
+          <span>Background</span>
+          <select id="background">
+            <option value="#fff">White</option>
+            <option value="#f6c492">Peach</option>
+            <option value="#ffc966">Orange</option>
+            <option value="#e9d66b">Yellow</option>
+            <option value="#89cff0">Blue</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="dark-mode-options">
+        <label>
+          <span>Foreground</span>
+          <select id="foreground">
+            <option value="#fff">White</option>
+            <option value="#f6c492">Peach</option>
+            <option value="#ffc966">Orange</option>
+            <option value="#e9d66b">Yellow</option>
+            <option value="#89cff0">Blue</option>
+          </select>
+        </label>
+      </div>
+
+    </div>
+
+    <main>
+      <h1>Using CSS + SVG filters to simulate color vision deficiencies</h1>
+
+      <p>Sed posuere consectetur est at lobortis. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+
+      <img src="images/ggplot2.png" />
+
+      <p>Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas faucibus mollis interdum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+
+      <img src="images/pairwise.png" />
+
+      <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+
+      <img src="images/fluid.png" />
+
+      <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas faucibus mollis interdum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+
+      <img src="images/cat.jpg" />
+
+      <p>Cras mattis consectetur purus sit amet fermentum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+
+      <img src="images/cat2.jpg" />
+
+      <svg>
+        <filter id="blurred-vision">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2">
+        </filter>
+
+
+        <!--
+        The filter grayscale matrix is based on the following research paper:
+        Rang Man Ho Nguyen and Michael S. Brown,
+        “Why You Should Forget Luminance Conversion and Do Something Better”.
+        IEEE Conference on Computer Vision and Pattern Recognition (CVPR),
+        Honolulu, HI, 2017. pp. 6750-6758.
+        https://openaccess.thecvf.com/content_cvpr_2017/papers/Nguyen_Why_You_Should_CVPR_2017_paper.pdf
+        -->
+        <filter id="achromatopsia">
+          <feColorMatrix values="
+            0.213  0.715  0.072  0.000  0.000
+            0.213  0.715  0.072  0.000  0.000
+            0.213  0.715  0.072  0.000  0.000
+            0.000  0.000  0.000  1.000  0.000
+          ">
+          </feColorMatrix>
+        </filter>
+
+
+        <!--
+        The filter color matrices are based on the following research paper:
+        Gustavo M. Machado, Manuel M. Oliveira, and Leandro A. F. Fernandes,
+        “A Physiologically-based Model for Simulation of Color Vision Deficiency”.
+        IEEE Transactions on Visualization and Computer Graphics. Volume 15 (2009),
+        Number 6, November/December 2009. pp. 1291-1298.
+        https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simulation.html
+        -->
+        <filter id="deuteranopia">
+          <feColorMatrix values="
+            0.367  0.861 -0.228  0.000  0.000
+            0.280  0.673  0.047  0.000  0.000
+           -0.012  0.043  0.969  0.000  0.000
+            0.000  0.000  0.000  1.000  0.000
+          ">
+          </feColorMatrix>
+        </filter>
+
+        <filter id="protanopia">
+          <feColorMatrix values="
+            0.152  1.053 -0.205  0.000  0.000
+            0.115  0.786  0.099  0.000  0.000
+           -0.004 -0.048  1.052  0.000  0.000
+            0.000  0.000  0.000  1.000  0.000
+          ">
+          </feColorMatrix>
+        </filter>
+
+        <filter id="tritanopia">
+          <feColorMatrix values="
+            1.256 -0.077 -0.179  0.000  0.000
+           -0.078  0.931  0.148  0.000  0.000
+            0.005  0.691  0.304  0.000  0.000
+            0.000  0.000  0.000  1.000  0.000
+          ">
+          </feColorMatrix>
+        </filter>
+      </svg>
+    </main>
+
+    <script type="module" src="main.ts"></script>
+  </body>
+</html>
